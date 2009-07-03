@@ -1,6 +1,22 @@
 = asterisk-manager
 
-Description goes here.
+= Overview:
+
+A block based DSL for interacting with the Asterisk Manager through a TCP connection.
+
+== Installation:
+
+  $ gem sources -a http://gems.github.com/ (you only need to do this once)
+  $ gem install kieranj-asterisk-manager
+
+= Usage:
+  
+  require 'rubygems'
+  require 'asterisk-manager'
+  
+  AsteriskManager.start('host', 'user', 'secret') do |asterisk|
+    asterisk.dial('SIP/123testphone', '7275551212')
+  end
 
 == Copyright
 
