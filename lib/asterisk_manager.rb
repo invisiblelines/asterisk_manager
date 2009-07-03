@@ -12,8 +12,8 @@ require "socket"
 
 class AsteriskManager
   
-  # <tt>:host</tt>:: Asterisk host/IP.
-  # <tt>:port</tt>:: Defaults to 5038
+  # <tt>host</tt>:: Asterisk host/IP.
+  # <tt>port</tt>:: Defaults to 5038
   
   def initialize(host, port=5038)
     @host = host
@@ -28,10 +28,10 @@ class AsteriskManager
     
   end
   
-  # <tt>:host</tt>:: Asterisk host/IP.
-  # <tt>:username</tt>:: Asterisk username.
-  # <tt>:secret</tt>:: Asterisk secret.
-  # <tt>:port</tt>:: Defaults to 5038
+  # <tt>host</tt>:: Asterisk host/IP.
+  # <tt>username</tt>:: Asterisk username.
+  # <tt>secret</tt>:: Asterisk secret.
+  # <tt>port</tt>:: Defaults to 5038
   
   # TODO: Check authentication response, flag logged in or raise error
   def start(host, username, secret, port=5038)
@@ -51,12 +51,12 @@ class AsteriskManager
   
   # Dials the extension from the channel.
   # Required fields are:
-  # <tt>:channel</tt>:: Your Asterisk device.
-  # <tt>:extension</tt>:: The number to dial.
+  # <tt>channel</tt>:: Your Asterisk device.
+  # <tt>extension</tt:: The number to dial.
   # Options
-  # <tt>:context</tt>:: Context
-  # <tt>:priority</tt>:: Priority
-  # <tt>:caller_id</tt>:: Caller ID
+  # <tt>context</tt>:: Context
+  # <tt>priority</tt>:: Priority
+  # <tt>caller_id</tt>:: Caller ID
 
   def originate(channel, extension, options={})
     options = {:context => "phones", :priority => 1, :callerid => "Asterisk Automatic Wardial"}.merge(options)
@@ -71,8 +71,8 @@ class AsteriskManager
     
   protected
   
-    # <tt>:username</tt>:: Asterisk manager username.
-    # <tt>:secret</tt>:: Asterisk manager secret.
+    # <tt>username</tt>:: Asterisk manager username.
+    # <tt>secret</tt>:: Asterisk manager secret.
   
     def login(username, secret)
       send_action "Login", { 
