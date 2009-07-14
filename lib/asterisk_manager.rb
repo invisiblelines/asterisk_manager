@@ -1,11 +1,11 @@
 require "socket"
 
 # = Overview:
-
+#
 # A block based DSL for interacting with the Asterisk Manager through a TCP connection.
 
 # = Usage:
-
+#
 # AsteriskManager.start('host', 'user', 'secret') do |asterisk|
 #   asterisk.dial('SIP/123testphone', '7275551212')
 # end
@@ -16,27 +16,34 @@ class AsteriskManager
   # <tt>port</tt>:: Defaults to 5038
   
   def initialize(host, port=5038)
-    @host = host
-    @port = port
+    @host   = host
+    @port   = port
+    @socket = TCPSocket.new(@host, @port)
   end
   
   class << self
     
-    def start(host, username, secret, &block)
-      new(host).start(host, username, secret, &block)
+    # Convience method for new().start() 
+    #
+    # <tt>host</tt>:: Asterisk host/IP.
+    # <tt>username</tt>:: Asterisk username.
+    # <tt>secret</tt>:: Asterisk secret.
+    # <tt>port</tt>:: Defaults to 5038
+    
+    def start(host, username, secret, port=5038, &block)
+      new(host, port).start(username, secret, &block)
     end
     
   end
   
+  # Logs in, yields the block, then logs off and closes the socket
   # <tt>host</tt>:: Asterisk host/IP.
   # <tt>username</tt>:: Asterisk username.
-  # <tt>secret</tt>:: Asterisk secret.
-  # <tt>port</tt>:: Defaults to 5038
   
   # TODO: Check authentication response, flag logged in or raise error
-  def start(host, username, secret, port=5038)
+  def start(username, secret, &block)
+    return unless block_given?
     begin
-      @socket = TCPSocket.new(host, port)
       login(username, secret)
       return yield(self)
     ensure
@@ -45,6 +52,8 @@ class AsteriskManager
     end
   end
   
+  # Sends the ping command
+  
   def ping
     send_action "Ping"
   end
@@ -52,7 +61,7 @@ class AsteriskManager
   # Dials the extension from the channel.
   # Required fields are:
   # <tt>channel</tt>:: Your Asterisk device.
-  # <tt>extension</tt:: The number to dial.
+  # <tt>extension</tt>:: The number to dial.
   # Options
   # <tt>context</tt>:: Context
   # <tt>priority</tt>:: Priority
@@ -89,7 +98,7 @@ class AsteriskManager
     
     def send_action(action, options={})
       action = "Action: #{action}\r\n"
-      action += options.map { |k,v| "#{k.to_s.capitalize}: #{v}"}.reverse.join("\r\n")
+      action += options.map { |k,v| "#{k.to_s.capitalize}: #{v}"}.join("\r\n")
       action += options.any? ? "\r\n\r\n" : "\r\n"
       @socket.print(action)
     end
