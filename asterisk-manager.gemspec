@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors                   = ["Kieran Johnson"]
   s.email                     = ['hello@invisiblelines.com']
   s.homepage                  = 'http://github.com/kieranj/asterisk_manager'
-  s.files                     = Dir['Gemfile', 'README.rdoc', 'Rakefile', 'lib/**/*']
+  s.files                     = Dir['Gemfile', 'README.md', 'Rakefile', 'lib/**/*']
   s.test_files                = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables               = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths             = ['lib']
