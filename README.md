@@ -4,6 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/kieranj/asterisk_manager/badges/gpa.svg)](https://codeclimate.com/github/kieranj/asterisk_manager)
 [![Coverage Status](https://coveralls.io/repos/kieranj/asterisk_manager/badge.png)](https://coveralls.io/r/kieranj/asterisk_manager)
 [![Dependency Status](https://gemnasium.com/kieranj/asterisk_manager.svg)](https://gemnasium.com/kieranj/asterisk_manager)
+[![Gem Version](https://badge.fury.io/rb/asterisk_manager.svg)](http://badge.fury.io/rb/asterisk_manager)
 
 ## Overview
 
