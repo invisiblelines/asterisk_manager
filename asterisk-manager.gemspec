@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.summary                   = s.summary
 
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'simplecov'
   s.add_development_dependency 'guard'
   s.add_development_dependency 'guard-rspec'
   s.add_development_dependency 'fuubar'
