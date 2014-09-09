@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe AsteriskManager::Client do
 
-  describe "a new session" do
+  let(:socket) { instance_double('TCPSocket', print: true, close: true) }
 
-    let(:socket) { instance_double('TCPSocket', print: true, close: true) }
+  describe "a new session" do
 
     before do
       allow(TCPSocket).to receive(:new).and_return(socket)
@@ -40,6 +40,27 @@ describe AsteriskManager::Client do
       AsteriskManager::Client.start("127.0.0.1", "tester", "secret") { |asterisk| asterisk.ping }
     end
 
+  end
+
+  describe 'originating a call' do
+    before do
+      allow(TCPSocket).to receive(:new).and_return(socket)
+    end
+
+    let(:channel)   { 'SIP/101test' }
+    let(:extension) { '8135551212' }
+    let(:options) {
+      {
+        context: 'default',
+        priority: 1,
+        callerid: '3125551212'
+      }
+    }
+
+    it 'sends an originate command' do
+      expect(socket).to receive(:print).with("Action: Originate\r\nChannel: #{channel}\r\nContext: #{options[:context]}\r\nExten: #{extension}\r\nPriority: #{options[:priority]}\r\nCallerid: #{options[:callerid]}\r\n\r\n")
+      AsteriskManager::Client.start('127.0.0.1', 'tester', 'secret') { |asterisk| asterisk.originate(channel, extension, options) }
+    end
   end
 
 end
