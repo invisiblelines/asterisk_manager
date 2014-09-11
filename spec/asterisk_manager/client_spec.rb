@@ -63,4 +63,17 @@ describe AsteriskManager::Client do
     end
   end
 
+  describe 'dbput' do
+    let(:socket) { instance_double('TCPSocket', print: true, close: true) }
+
+    before do
+      allow(TCPSocket).to receive(:new).and_return(socket)
+    end
+
+    it 'sends a dbput command' do
+      expect(socket).to receive(:print).with("Action: DBPut\r\nFamily: diverts\r\nKey: 0160\r\nVal: 299\r\n\r\n")
+      AsteriskManager::Client.start('127.0.0.1', 'tester', 'secret') { |asterisk| asterisk.dbput('diverts', '0160', '299') }
+    end
+  end
+
 end

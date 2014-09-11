@@ -78,6 +78,20 @@ module AsteriskManager
       }
     end
 
+    # Stores the given value for the key in the Asterisk database
+    #
+    # <tt>family</tt>:: Your Asterisk device.
+    # <tt>key</tt>:: Your Asterisk device.
+    # <tt>value</tt>:: The number to dial.
+
+    def dbput(family, key, value)
+      send_action "DBPut", {
+        :family => family,
+        :key    => key,
+        :val    => value
+      }
+    end
+
     protected
 
       # <tt>username</tt>:: Asterisk manager username.
