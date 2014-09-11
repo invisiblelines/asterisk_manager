@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'fuubar'
   s.add_development_dependency 'rb-inotify'
   s.add_development_dependency 'rb-fsevent'
-
+  s.add_development_dependency 'codeclimate-test-reporter'
 end
